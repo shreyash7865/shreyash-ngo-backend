@@ -106,7 +106,15 @@ router.get('/requested-medicine', (req, res)=>{
         })
     }
 })
-
+router.get('/members', (req, res) => {
+    connection.query('SELECT * FROM member', (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
 
 
 router.get('/home',(req, res)=>{
