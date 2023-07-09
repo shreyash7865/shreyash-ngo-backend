@@ -46,10 +46,10 @@ router.post('/login', (req, res) => {
         } else {
           if (results.length > 0) {
             // Login successful
-            res.send(results[0]);
+            res.send({message: 'Logged in',results: results[0]});
           } else {
             // Invalid credentials
-            res.send('Invalid credentials');
+            res.send({message: 'Wrong regdNumber/password combination!',results: results[0]});
           }
         }
       }
