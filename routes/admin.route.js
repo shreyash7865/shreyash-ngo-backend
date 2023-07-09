@@ -33,30 +33,28 @@ router.post('/signup', (req, res)=>{
 
 // Admin Login
 
-router.post('/login', (req, res)=>{
+router.post('/login', (req, res) => {
     const regdNumber = req.body.regdNumber;
-    const password = req.body.password
-    connection.query('select * from admin where regdNumber = ? AND password=? ', 
-    [regdNumber, password], (err, result) => {
+    const password = req.body.password;
+  
+    connection.query(
+      'SELECT * FROM admin WHERE regdNumber = ? AND password = ?',
+      [regdNumber, password],
+      (err, results) => {
         if (err) {
-            res.send(err);
+          res.send(err);
+        } else {
+          if (results.length > 0) {
+            // Login successful
+            res.send(results[0]);
+          } else {
+            // Invalid credentials
+            res.send('Invalid credentials');
+          }
         }
-        if (result) {
-            req.session.loggedin=true;
-            // req.session.id = result[0].id;
-            req.session.userData = result[0];
-            res.status(200).send(result)
-
-            console.log("Admin Logged in")
-            // res.redirect('/api/customer/profile')
-        }
-        else {
-            res.send({
-                message: "Wrong Credentials",
-            })
-        }
-    })
-})
+      }
+    );
+  });
 
 
 // View Medicines

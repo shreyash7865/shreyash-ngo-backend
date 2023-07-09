@@ -59,9 +59,7 @@ router.post('/login', (req, res) => {
                     res.send("Invalid Credentials");
                 }
                 if (result) {
-                    req.session.loggedin = true;
-                    req.session.userData = result[0];
-                    res.status(200).send(result)
+                    res.status(200).send(result[0])
                     console.log("Member Logged In")
                 }
                 else {
