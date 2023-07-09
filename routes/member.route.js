@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const connection = require('../db/conn');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const {Configuration, OpenAIApi} = require('openai');
+const { Configuration, OpenAIApi } = require('openai');
 const configuration = new Configuration({
     apiKey: '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',
 
@@ -26,14 +26,14 @@ router.post('/signup', (req, res) => {
     const password = req.body.password;
     const address = req.body.address;
 
+
     connection.query(`create table if not exists member(f_name varchar(255), l_name varchar(255), email varchar(255), password varchar(255), address varchar(255))`, (err, result) => {
         if (err) {
             res.send(err);
         }
         else {
             console.log("Table Created");
-            connection.query(`insert into member values(?,?,?,?,?)
-    ;`, [f_name, l_name, email, password, address],
+            connection.query(`insert into member values(?,?,?,?,?);`, [f_name, l_name, email, password, address],
                 (err, result) => {
                     if (err) {
                         res.send(err)
@@ -101,7 +101,7 @@ router.post('/add-medicine', (req, res) => {
 })
 
 router.post('/chatbot', (req, res) => {
-    const {prompt} = req.body;
+    const { prompt } = req.body;
     const completion = openai.createCompletion({
         model: 'davinci-codex',
         prompt: prompt,
