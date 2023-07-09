@@ -15,22 +15,19 @@ router.use(session({
 
 
 router.post('/add-ngo', (req, res) => {
-    const name = req.body.name;
-    const username = req.body.username;
-    const password = req.body.password;
-    const address = req.body.address;
-
-
-    connection.query(`insert into ngo values (?,?,?,?);`,
-        [name, username, password, address], (err, result) => {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.send(result);
-            }
-        });
-});
+    const { name, username, password, address } = req.body;
+  
+    const query = 'INSERT INTO ngo (name, username, password, address) VALUES (?, ?, ?, ?)';
+    connection.query(query, [name, username, password, address], (err, result) => {
+      if (err) {
+        console.error('Error inserting NGO:', err);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+      console.log(result);
+      res.send({result: result});
+    });
+  });
 
 router.post('/login', (req, res) => {
     const username = req.body.username;
