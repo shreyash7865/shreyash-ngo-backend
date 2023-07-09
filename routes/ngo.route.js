@@ -15,15 +15,14 @@ router.use(session({
 
 
 router.post('/add-ngo', (req, res) => {
-    const id = req.body.id;
     const name = req.body.name;
     const username = req.body.username;
     const password = req.body.password;
     const address = req.body.address;
 
 
-    connection.query(`insert into ngo values (?,?,?,?,?);`,
-        [id, name, username, password, address], (err, result) => {
+    connection.query(`insert into ngo values (?,?,?,?);`,
+        [name, username, password, address], (err, result) => {
             if (err) {
                 res.send(err);
             }
