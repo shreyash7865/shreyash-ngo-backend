@@ -56,10 +56,10 @@ router.post('/login', (req, res) => {
         connection.query(`select * from member where email=? and password = ?`,
             [email, password], (err, result) => {
                 if (err) {
-                    res.send("Invalid Credentials");
+                    res.send({ message: "Invalid Credentials", result: err });
                 }
-                if (result) {
-                    res.status(200).send(result[0])
+                if (result.length > 0) {
+                    res.status(200).send({ message: "Logged In", result: result[0] })
                     console.log("Member Logged In")
                 }
                 else {
